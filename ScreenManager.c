@@ -131,7 +131,7 @@ static void checkRecalculation(ScreenManager* this, double* oldTime, int* sortTi
    if (*rescan) {
       *oldTime = newTime;
       ProcessList_scan(pl);
-      if (*sortTimeout == 0 || this->settings->treeView) {
+      if (*sortTimeout <= 0 || this->settings->treeView) { // FIXME: why is a change to <= here necessary?
          ProcessList_sort(pl);
          *sortTimeout = 1;
       }

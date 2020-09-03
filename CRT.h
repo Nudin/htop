@@ -201,6 +201,8 @@ extern void CRT_disableDelay();
 
 extern void CRT_enableDelay();
 
+extern void CRT_setDelay(int newDelay);
+
 extern void CRT_setColors(int colorScheme);
 
 #endif

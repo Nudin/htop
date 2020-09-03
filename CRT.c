@@ -786,6 +786,11 @@ void CRT_enableDelay() {
    halfdelay(CRT_delay);
 }
 
+void CRT_setDelay(int newDelay) {
+   CRT_delay = newDelay;
+   halfdelay(CRT_delay);
+}
+
 void CRT_setColors(int colorScheme) {
    CRT_colorScheme = colorScheme;
 

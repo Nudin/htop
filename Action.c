@@ -283,6 +283,28 @@ static Htop_Reaction actionInvertSortOrder(State* st) {
    return HTOP_REFRESH | HTOP_SAVE_SETTINGS;
 }
 
+static Htop_Reaction actionDecDelay(State* st) {
+   int old = st->settings->delay;
+   int jmp = old / 10;
+   if ( jmp < 1 ) jmp = 1;
+   st->settings->delay -= jmp;
+   if (st->settings->delay <= 0) {
+      st->settings->delay = 1;
+   }
+   CRT_setDelay(st->settings->delay);
+
+   return HTOP_KEEP_FOLLOWING | HTOP_REDRAW_BAR | HTOP_UPDATE_PANELHDR;  // FIXME
+}
+
+static Htop_Reaction actionIncDelay(State* st) {
+   int old = st->settings->delay;
+   int jmp = old / 10;
+   if ( jmp < 1 ) jmp = 1;
+   st->settings->delay += jmp;
+   CRT_setDelay(st->settings->delay);
+   return HTOP_KEEP_FOLLOWING | HTOP_REDRAW_BAR | HTOP_UPDATE_PANELHDR;
+}
+
 static Htop_Reaction actionSetSortColumn(State* st) {
    return sortBy(st);
 }
@@ -579,6 +601,9 @@ void Action_setBindings(Htop_Action* keys) {
    keys['/'] = actionIncSearch;
    keys['n'] = actionIncNext;
    keys['N'] = actionIncPrev;
+
+   keys['d'] = actionDecDelay;
+   keys['D'] = actionIncDelay;
 
    keys[']'] = actionHigherPriority;
    keys[KEY_F(7)] = actionHigherPriority;
